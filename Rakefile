@@ -1,7 +1,7 @@
 require 'fileutils'
 require 'open-uri'
 
-task :default => ["build:init"]
+task :default => ["build:init", "build:check"]
 
 namespace 'build' do
   #Set root_dir = absolut path to Rakefile
