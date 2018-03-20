@@ -1,0 +1,4 @@
+src/
+tmp_files/
+*.deb
+*.rpm
