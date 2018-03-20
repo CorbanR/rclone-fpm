@@ -1,6 +1,5 @@
 require 'fileutils'
 require 'open-uri'
-require 'pp'
 
 task :default => ["build:init"]
 
@@ -11,7 +10,7 @@ namespace 'build' do
   desc "Build rclone deb"
   task :deb => [:check, :init, :download] do
     command = `fpm --force -s dir -t deb -n rclone -v #{@options[:version]} --iteration #{@options[:iteration]} --url https://rclone.org/ -C #{@root_dir}/src/ -a #{@options[:arch]} --after-install #{@root_dir}/bash_scripts/after-install.sh --after-remove #{@root_dir}/bash_scripts/after-remove.sh`
-    pp command
+    puts command
     package = command.match(/rclone.*#{@options[:version]}-#{@options[:iteration]}.*deb/).to_s
 
     push_package(@packagecloud_config[:packagecloud_repository], "#{@root_dir}/#{package}", @options[:dists])
@@ -20,7 +19,7 @@ namespace 'build' do
   desc "Build rclone rpm"
   task :rpm => [:check, :init, :download] do
     command = `fpm --force -s dir -t rpm -n rclone -v #{@options[:version]} --iteration #{@options[:iteration]} --url https://rclone.org/ -C #{@root_dir}/src/ -a #{@options[:arch]} --after-install #{@root_dir}/bash_scripts/after-install.sh --after-remove #{@root_dir}/bash_scripts/after-remove.sh`
-    pp command
+    puts command
     package = command.match(/rclone.*#{@options[:version]}-#{@options[:iteration]}.*rpm/).to_s
 
     push_package(@packagecloud_config[:packagecloud_repository], "#{@root_dir}/#{package}", @options[:dists])
