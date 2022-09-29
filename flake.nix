@@ -32,12 +32,12 @@
           inherit (darwin.apple_sdk.frameworks) CoreServices ApplicationServices Security;
           darwin_packages = [CoreServices ApplicationServices Security];
 
-          ruby = ruby_3_1;
+          ruby = ruby_2_7;
         in
-          pkgs.mkShell rec {
+          pkgs.mkShellNoCC rec {
             buildInputs =
               [
-                autoconf automake bash-completion bison
+                autoconf automake bash-completion (hiPrio llvmPackages_14.bintools) bison
                 cairo coreutils gdbm git gnumake groff
                 libffi libiconv libtool libunwind libxml2
                 libxslt libyaml msgpack ncurses netcat openssl
